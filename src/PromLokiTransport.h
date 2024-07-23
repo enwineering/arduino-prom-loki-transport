@@ -14,13 +14,11 @@ typedef ESP32Client PromLokiTransport;
 
 #elif defined(ARDUINO_SAMD_MKRGSM1400)
 
-#include "clients/MKRGSM1400Client.h"
-typedef MKRGSM1400Client PromLokiTransport;
+#error "MKRGSM1400 is unsupported by this library - use the original grafana one."
 
 #elif defined(ARDUINO_SAMD_MKRWIFI1010)
 
-#include "clients/MKRWIFI1010Client.h"
-typedef MKRWIFI1010Client PromLokiTransport;
+#error "MKRWIFI1010 is unsupported by this library - use the original grafana one."
 
 #else 
 
