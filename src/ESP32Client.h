@@ -7,8 +7,8 @@
 #include <WiFi.h>
 #include <time.h>
 #include <esp_sntp.h>
-#include <ArduinoBearSSL.h>
-#include "bear/BearHelper.h"
+//#include <ArduinoBearSSL.h>
+//#include "bear/BearHelper.h"
 
 class ESP32Client : public PLTransport {
 public:
@@ -31,6 +31,7 @@ private:
     uint8_t _numClients = 0;
     void _connect();
     uint16_t _connectCount = 0;
+    uint8_t _secureStart(WiFiClientSecure *espClient);
 };
 
 #endif // ESP32

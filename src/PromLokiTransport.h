@@ -5,7 +5,7 @@
 
 #if defined(ESP32)
 
-#include "clients/ESP32Client.h"
+#include "ESP32Client.h"
 typedef ESP32Client PromLokiTransport;
 
 #elif defined(ESP8266)

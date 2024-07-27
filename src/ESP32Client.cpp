@@ -26,7 +26,7 @@ bool ESP32Client::_begin() {
         return false;
     }
 
-    ArduinoBearSSL.onGetTime(getTime);
+//    ArduinoBearSSL.onGetTime(getTime);
 
     DEBUG_PRINTLN("Connecting Wifi");
 
@@ -56,20 +56,17 @@ Client* ESP32Client::getClient() {
         return nullptr;
     }
 
-    WiFiClient* wifiClient = new WiFiClient;
-    _clients[_numClients] = wifiClient;
-    _numClients++;
     if (_useTls) {
-        size_t numTas = 0;
-        
-        br_x509_trust_anchor* tas = certsToTrustAnchors(_certs, _certLen, &numTas);
-        
-        BearSSLClient* sslClient = new BearSSLClient(*wifiClient, tas, numTas);
-        _clients[_numClients] = sslClient;
+        WiFiClientSecure *tempClient = new WiFiClientSecure;
+        tempClient->setCACert(_certs);
+        Client* wifiClient = tempClient;
+        _clients[_numClients] = wifiClient;
         _numClients++;
-        return sslClient;
-    }
-    else {
+        return wifiClient;
+    } else {
+        Client* wifiClient = new WiFiClient;
+        _clients[_numClients] = wifiClient;
+        _numClients++;
         return wifiClient;
     }
 }

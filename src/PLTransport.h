@@ -2,6 +2,8 @@
 #define PLTransport_H
 
 #include <Arduino.h>
+#include <WiFiClientSecure.h>
+#include <WiFiClient.h>
 #include <Client.h>
 #include "PLDebug.h"
 
