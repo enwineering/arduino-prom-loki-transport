@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 #include <WiFiClientSecure.h>
-#include <WiFiClient.h>
-#include <Client.h>
+//#include <WiFiClient.h>
+//#include <Client.h>
 #include "PLDebug.h"
 
 class IPromLokiTransport {
@@ -13,7 +13,7 @@ public:
     virtual bool checkAndReconnectConnection() = 0;
     virtual bool disconnect() = 0;
     virtual int64_t getTimeMillis() = 0;
-    virtual Client* getClient() = 0;
+    virtual WiFiClientSecure* getClient() = 0;
     virtual uint16_t getConnectCount() = 0;
 
     char* errmsg;
@@ -39,13 +39,13 @@ public:
     virtual bool checkAndReconnectConnection() = 0;
     virtual bool disconnect() = 0;
     virtual int64_t getTimeMillis() = 0;
-    virtual Client* getClient() = 0;
+    virtual WiFiClientSecure* getClient() = 0;
     virtual uint16_t getConnectCount() = 0;
 
 protected:
     Stream* _debug = nullptr;
 
-    bool _useTls;
+    bool _useTls = true; // even if set to false, we're using secure
     const char* _certs;
     size_t _certLen;
     const char* _wifiSsid;

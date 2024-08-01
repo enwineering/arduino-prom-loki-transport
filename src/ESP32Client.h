@@ -19,7 +19,7 @@ public:
     bool checkAndReconnectConnection();
     bool disconnect();
     int64_t getTimeMillis();
-    Client* getClient();
+    WiFiClientSecure* getClient();
     uint16_t getConnectCount();
 
 protected:
@@ -27,7 +27,7 @@ protected:
 
 
 private:
-    Client** _clients = nullptr;
+    WiFiClientSecure** _clients = nullptr;
     uint8_t _numClients = 0;
     void _connect();
     uint16_t _connectCount = 0;

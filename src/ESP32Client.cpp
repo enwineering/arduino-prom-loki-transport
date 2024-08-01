@@ -2,7 +2,7 @@
 #include "ESP32Client.h"
 
 ESP32Client::ESP32Client() {
-    _clients = new Client * [_maxClients];
+    _clients = new WiFiClientSecure * [_maxClients];
 }
 
 ESP32Client::~ESP32Client() {
@@ -26,8 +26,6 @@ bool ESP32Client::_begin() {
         return false;
     }
 
-//    ArduinoBearSSL.onGetTime(getTime);
-
     DEBUG_PRINTLN("Connecting Wifi");
 
     _connect();
@@ -49,26 +47,19 @@ bool ESP32Client::_begin() {
     return true;
 }
 
-Client* ESP32Client::getClient() {
+WiFiClientSecure* ESP32Client::getClient() {
 
     if (_numClients >= _maxClients) {
         errmsg = (char*)"Too many clients requested, increase maxClients";
         return nullptr;
     }
 
-    if (_useTls) {
-        WiFiClientSecure *tempClient = new WiFiClientSecure;
-        tempClient->setCACert(_certs);
-        Client* wifiClient = tempClient;
-        _clients[_numClients] = wifiClient;
-        _numClients++;
-        return wifiClient;
-    } else {
-        Client* wifiClient = new WiFiClient;
-        _clients[_numClients] = wifiClient;
-        _numClients++;
-        return wifiClient;
-    }
+    WiFiClientSecure *wifiClient = new WiFiClientSecure;
+    wifiClient->setInsecure();
+//    wifiClient->setCACert(_certs);
+    _clients[_numClients] = wifiClient;
+    _numClients++;
+    return wifiClient;
 }
 
 uint16_t ESP32Client::getConnectCount() {
